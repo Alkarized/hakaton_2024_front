@@ -4,8 +4,8 @@ import SpinMachine from "./Spins/SpinMachine";
 const App = () => {
     return (
         <div>
-            {/*<SlotMachine />*/}
-            <SpinMachine/>
+            <SlotMachine />
+            {/*<SpinMachine/>*/}
         </div>
     );
 };

@@ -1,24 +1,27 @@
-import { Key, useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import {useEffect, useState} from 'react';
+import styled, {keyframes} from 'styled-components';
 
-const SlotMachine = ({ items, spinning, timeSpinning }) => {
+const imgPath = "/imgs/";
+const gifPath = "/gifs/";
+
+const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
     const spinAnimation = () => keyframes`
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-${70 * items.count}px); 
-    }
-    75% {
-        transform: translateY(-${90 * items.count}px);
-    }
-    90% {
-        transform: translateY(-${99 * items.count}px); 
-    }
-    100% {
-        transform: translateY(-${100 * items.count}px); 
-    }
-`;
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-${70 * items.count}px);
+        }
+        75% {
+            transform: translateY(-${90 * items.count}px);
+        }
+        90% {
+            transform: translateY(-${99 * items.count}px);
+        }
+        100% {
+            transform: translateY(-${100 * items.count}px);
+        }
+    `;
 
     const SlotItems = styled.div`
         transition: transform ${timeSpinning / 1000}s ease-out;
@@ -46,8 +49,8 @@ const SlotMachine = ({ items, spinning, timeSpinning }) => {
 
             setTimeout(() => {
                 setAnimationClass('');
-                setShaking('shaking')
                 setPosition(items.count);
+                setShaking('shaking')
             }, timeSpinning);
         }
     }, [spinning]);
@@ -62,8 +65,12 @@ const SlotMachine = ({ items, spinning, timeSpinning }) => {
                 }}
             >
                 {items.items.map((item, index) => (
-                    <SlotItem key={index} className={`slot-item ${shaking}`} >
-                        {item}
+                    <SlotItem key={index} className={`slot-item`}>
+                        {isPlaying && shaking && !spinning ? (
+                            <img src={`${gifPath}${item}.gif`} width="100px" height="100px"/>
+                        ) : (
+                            <img src={`${imgPath}${item}.png`} width="100px" height="100px"/>
+                        )}
                     </SlotItem>
                 ))}
             </SlotItems>
