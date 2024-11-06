@@ -1,6 +1,7 @@
-div {
+body {
     background: aqua;
 }
+
 
 .slot-machine {
     display: flex;
