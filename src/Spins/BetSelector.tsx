@@ -1,7 +1,7 @@
-import  {useState} from 'react';
+import {useState} from 'react';
 import './BetBoard.css'; // Импорт стилей
 
-const BetBoard = () => {
+const BetBoard = ({ data }) => {
     const [selectedBet, setSelectedBet] = useState('');
 
     const handleNumberClick = (number) => {
@@ -17,19 +17,19 @@ const BetBoard = () => {
     };
 
     const renderNumberCells = () => {
-        const numbers = []
-        for (let i = 0; i < 36; i++) {
-            numbers.push(i + 1)
-        }
         return (
             <div className="number-board">
-                {numbers.map((number) => (
+                {data.slice(1, data.length).map((number) => (
                     <button
-                        key={number}
-                        className={`bet-button ${number % 2 === 0 ? 'even' : 'odd'} ${selectedBet === number ? 'selected' : ''}`}
-                        onClick={() => handleNumberClick(number)}
+                        style={{
+                            background: `${number.style.backgroundColor}`,
+                            color: `white`
+                        }}
+                        key={number.option}
+                        className={`bet-button ${number.option % 2 === 0 ? 'even' : 'odd'} ${selectedBet === number.option ? 'selected' : ''}`}
+                        onClick={() => handleNumberClick(number.option)}
                     >
-                        {number}
+                        {number.option}
                     </button>
                 ))}
             </div>

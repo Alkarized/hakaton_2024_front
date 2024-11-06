@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
 import {Wheel} from 'react-custom-roulette'
 import {PointerProps, WheelData} from "react-custom-roulette/dist/components/Wheel/types";
-import Chessboard from "./BetSelector";
 import BetSelector from "./BetSelector";
+import {wheelData, wheelSeqData} from "./WheelData";
 
 const bgColor = [
     "red",
@@ -15,7 +15,7 @@ const pointer: PointerProps = {
 }
 
 function generateList(max: number) {
-    let list = [];
+    /*let list = [];
     let toUse: number[] = [];
     let count = 0;
 
@@ -39,19 +39,24 @@ function generateList(max: number) {
         toUse.splice(index, 1); // Удаляем использованный элемент
     }
 
-    return list
+    return list*/
+
+
+    return wheelSeqData;
 
 }
 
-const data2 = generateList(36);
+const data2 = generateList(37);
+
+const sortData = (tmpData) => {
+   return [...tmpData].sort((a, b) => a.option - b.option);
+}
 
 const SpinMachine = () => {
 
 
     const [mustSpin, setMustSpin] = useState(false);
     const [prizeNumber, setPrizeNumber] = useState(0);
-    const [bet, setBet] = useState('');
-    const [betType, setBetType] = useState('number'); // 'number', 'color', 'odd/even'
 
     const handleSpinClick = () => {
         if (!mustSpin) {
@@ -61,16 +66,6 @@ const SpinMachine = () => {
         }
 
     }
-
-    const handleBetChange = (e) => {
-        setBet(e.target.value);
-    };
-
-    const handleBetTypeChange = (e) => {
-        setBetType(e.target.value);
-        setBet(''); // Сбросить ставку при смене типа
-    };
-
 
     return (
         <>
@@ -97,8 +92,17 @@ const SpinMachine = () => {
                 fontSize={15}
                 pointerProps={pointer}
             />
-            <BetSelector/>
-            <button onClick={handleSpinClick}>SPIN</button>
+            <BetSelector data={sortData(data2)}/>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    justifySelf: "center"
+                }}>
+                <button onClick={handleSpinClick}>SPIN</button>
+            </div>
+
         </>
     )
 }
