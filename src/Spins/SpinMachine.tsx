@@ -3,6 +3,7 @@ import {Wheel} from 'react-custom-roulette'
 import {PointerProps, WheelData} from "react-custom-roulette/dist/components/Wheel/types";
 import BetSelector from "./BetSelector";
 import {wheelData, wheelSeqData} from "./WheelData";
+import {useParams} from "react-router-dom";
 
 const bgColor = [
     "red",
@@ -53,7 +54,7 @@ const sortData = (tmpData) => {
 }
 
 const SpinMachine = () => {
-
+    const {user_id} = useParams();
 
     const [mustSpin, setMustSpin] = useState(false);
     const [prizeNumber, setPrizeNumber] = useState(0);
@@ -100,7 +101,7 @@ const SpinMachine = () => {
                     justifyContent: "center",
                     justifySelf: "center"
                 }}>
-                <button onClick={handleSpinClick}>SPIN</button>
+                <button onClick={handleSpinClick}>SPIN {user_id}</button>
             </div>
 
         </>

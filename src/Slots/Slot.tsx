@@ -67,7 +67,7 @@ const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
                 {items.items.map((item, index) => (
                     <SlotItem key={index} className={`slot-item`}>
                         {isPlaying && shaking && !spinning ? (
-                            <img src={`${gifPath}${item}.gif`} width="100px" height="100px"/>
+                            <img src={`${gifPath}${item}.gif`} width="100px" height="100px"/> //todo import to load it faster!
                         ) : (
                             <img src={`${imgPath}${item}.png`} width="100px" height="100px"/>
                         )}

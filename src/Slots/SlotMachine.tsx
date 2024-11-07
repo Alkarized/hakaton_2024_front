@@ -33,11 +33,6 @@ const SlotMachine = () => {
         last: "",
         count: 0
     });
-    const [items4, setItems4] = useState({
-        items: [],
-        last: "",
-        count: 0
-    });
 
     const generateItems = (setItems, count, last) => {
         let tmpItems = []
@@ -62,7 +57,6 @@ const SlotMachine = () => {
         generateItems(setItems1, 25, symbols2[0])
         generateItems(setItems2, 50, symbols2[1])
         generateItems(setItems3, 100, symbols2[2])
-        generateItems(setItems4, 75, symbols2[3])
 
     }, []);
 
@@ -82,7 +76,6 @@ const SlotMachine = () => {
                 <Slot items={items1} spinning={spinning} timeSpinning={maxTime / 3} isPlaying={isPlaying}/>
                 <Slot items={items2} spinning={spinning} timeSpinning={maxTime / 2} isPlaying={isPlaying}/>
                 <Slot items={items3} spinning={spinning} timeSpinning={maxTime / 1} isPlaying={isPlaying}/>
-                <Slot items={items4} spinning={spinning} timeSpinning={maxTime / 1.5} isPlaying={isPlaying}/>
             </div>
             <button onClick={startSpin} disabled={spinning}>
                 {spinning ? "Spinning..." : "Spin"}

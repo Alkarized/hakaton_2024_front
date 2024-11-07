@@ -1,12 +1,12 @@
-body {
-    background: aqua;
-}
-
-
 .slot-machine {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('public/imgs/joker.png'); /* Замените путь на ваш */
+    background-size: cover; /* чтобы фон полностью покрывал контейнер */
+    background-position: center; /* центрирует фон в контейнере */
+    width: 500px;
+    height: 500px;
 }
 
 .slots {
