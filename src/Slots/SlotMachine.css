@@ -12,7 +12,7 @@
     width: 385px; /* Подберите подходящую ширину для фона */
     height: 800px;
     margin-bottom: 20px;
-    background-image: url('public/imgs/tt.png'); /* Замените путь на ваш */
+    background-image: url('/public/imgs/tt.png'); /* Замените путь на ваш */
     background-size: cover; /* чтобы фон полностью покрывал контейнер */
     background-position: center; /* центрирует фон в контейнере */
 }
