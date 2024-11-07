@@ -84,8 +84,9 @@ const SlotMachine = () => {
                 display: `${!spinning && pressed ? 'flex' : 'none'}`,
                 flexDirection: "column",
                 alignItems: "center",
-                position: "relative",
-                top: "-300px"
+                width: "400px",
+                height: "400px",
+
             }}/>
         </div>
 

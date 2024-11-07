@@ -2,18 +2,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('public/imgs/joker.png'); /* Замените путь на ваш */
-    background-size: cover; /* чтобы фон полностью покрывал контейнер */
-    background-position: center; /* центрирует фон в контейнере */
-    width: 500px;
-    height: 500px;
+
 }
 
 .slots {
-    display: flex;
     overflow: hidden;
-    height: 130px;
+    display: flex;
+    position: relative; /* Добавьте относительное позиционирование */
+    width: 385px; /* Подберите подходящую ширину для фона */
+    height: 800px;
     margin-bottom: 20px;
+    background-image: url('public/imgs/tt.png'); /* Замените путь на ваш */
+    background-size: cover; /* чтобы фон полностью покрывал контейнер */
+    background-position: center; /* центрирует фон в контейнере */
 }
 
 .slot {
@@ -21,7 +22,22 @@
     height: 100px;
     overflow: hidden;
     border: 2px solid #000;
-    margin: 0 5px;
+    position: absolute; /* Добавьте абсолютное позиционирование */
+}
+
+.slot:nth-child(1) {
+    left: 20px; /* Положение по горизонтали */
+    top: 15px;  /* Положение по вертикали */
+}
+
+.slot:nth-child(2) {
+    left: 140px;
+    top: 15px;
+}
+
+.slot:nth-child(3) {
+    left: 260px;
+    top: 15px;
 }
 
 .slot-item {
