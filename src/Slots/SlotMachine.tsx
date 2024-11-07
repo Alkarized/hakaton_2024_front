@@ -9,12 +9,14 @@ import gif2 from '../assets/slots/gifs/2.gif'
 import gif3 from '../assets/slots/gifs/3.gif'
 import gif4 from '../assets/slots/gifs/4.gif'
 import gif5 from '../assets/slots/gifs/5.gif'*/
+import { Fireworks } from '@fireworks-js/react'
+import type { FireworksHandlers } from '@fireworks-js/react'
 
 const SlotMachine = () => {
     const [spinning, setSpinning] = useState(false);
     const [pressed, setPressed] = useState(false);
     const [isPlaying, setPlaying] = useState(true);
-    const [balance, setBalance] = useState(10000);
+    const [balance, setBalance] = useState(100);
     const [bet, setBet] = useState(10);
     const [balanceClass, setBalanceClass] = useState('');
 
@@ -63,6 +65,7 @@ const SlotMachine = () => {
         generateItems(setItems3, 100, symbols2[2])
 
         setBet(bet => Math.min(bet, balance))
+        toggle()
 
     }, []);
 
@@ -70,17 +73,20 @@ const SlotMachine = () => {
         setSpinning(true);
         setPressed(true);
 
+        if (ref.current.isRunning) {
+            ref.current.stop()
+        }
+
         setTimeout(() => {
             setSpinning(false);
             setBalanceClass("increase") //increase / decrease
             setBalance(balance => balance + Number(bet));
-
+            toggle()
         }, maxTime);
 
     };
 
     useEffect(() => {
-        console.log("TTTTTTTTTT")
         const timer = setTimeout(() => {
             setBalanceClass('');
         }, 1000);
@@ -100,10 +106,19 @@ const SlotMachine = () => {
         }
     }
 
+    const ref = useRef<FireworksHandlers>(null)
 
+    const toggle = () => {
+        if (!ref.current) return
+        if (ref.current.isRunning) {
+            ref.current.stop()
+        } else {
+            ref.current.start()
+        }
+    }
 
     return (
-        <div className="slot-machine">
+        <div className="many-slot-machine">
             <div className="slots">
                 <Slot items={items1} spinning={spinning} timeSpinning={maxTime / 3} isPlaying={isPlaying}/>
                 <Slot items={items2} spinning={spinning} timeSpinning={maxTime / 2} isPlaying={isPlaying}/>
@@ -112,7 +127,7 @@ const SlotMachine = () => {
 
             <div className={`bg-div balance-div`}>
                 <div className={`balance ${balanceClass}`}>
-                    {balance}🍬
+                    {balance}$
                 </div>
             </div>
             <div className={`bg-div bet-div`}>
@@ -129,18 +144,33 @@ const SlotMachine = () => {
                     {spinning ? "Spinning..." : "Spin"}
                 </button>
             </div>
-            {/*<div style={styles.container}>
 
-            </div>*/}
-            <img src={gif} alt="sd" style={{
+            <Fireworks
+                ref={ref}
+                options={{ opacity: 0.5 }}
+                style={{
+                    position: "absolute",
+                    top: "20px",
+                    width: '350px',
+                    height: '350px',
+                }}
+            />
+
+            <img src={gif} alt="sd" onClick={() => {
+                setPressed(false)
+                if (ref.current.isRunning) {
+                    ref.current.stop()
+                }
+            }} style={{
                 display: `${!spinning && pressed ? 'flex' : 'none'}`,
                 flexDirection: "column",
                 alignItems: "center",
                 width: "400px",
                 height: "400px",
-                position: "relative",
-                top: "-700px"
+                position: "absolute",
+                top: "40px"
             }}/>
+
         </div>
 
     );

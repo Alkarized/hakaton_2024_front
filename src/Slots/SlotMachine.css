@@ -1,3 +1,7 @@
+html, body{
+    background-color: whitesmoke;
+}
+
 .slot-machine {
     display: flex;
     flex-direction: column;
@@ -8,12 +12,13 @@
 .slots {
     overflow: hidden;
     display: flex;
-    position: relative; /* Добавьте относительное позиционирование */
-    width: 430px; /* Подберите подходящую ширину для фона */
+    position: relative;
+    width: 430px;
     height: 640px;
     margin-bottom: 20px;
     background-image: url('/src/assets/jk.png');
     background-position: center;
+    background-color: red;
 }
 
 .slot {
@@ -25,17 +30,17 @@
 }
 
 .slot:nth-child(1) {
-    left: 30px;
+    left: 35px;
     top: 341px;
 }
 
 .slot:nth-child(2) {
-    left: 170px;
+    left: 169px;
     top: 341px;
 }
 
 .slot:nth-child(3) {
-    left: 300px;
+    left: 303px;
     top: 341px;
 }
 
@@ -79,9 +84,9 @@ button {
 }
 
 .spin-div{
-    top: -180px;
+    top: -179px;
     left: 8px;
-    width: 225px;
+    width: 228px;
     height: 60px;
 }
 
@@ -107,8 +112,9 @@ button {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% { transform: scale(1); }
+    50% {transform: scale(1.5); }
+    100% { transform: scale(1); }
 }
 
 .balance-div{
@@ -116,13 +122,13 @@ button {
     left: -54px;
     height: 40px;
     width: 98px;
-    border-radius: 9px;
+    border-radius: 7px;
 }
 
 .balance {
     font-size: 20px;
     font-weight: bold;
-    color: black;
+    color: white;
     margin: 0 10px;
     transition: transform 0.5s, color 0.5s;
 }
