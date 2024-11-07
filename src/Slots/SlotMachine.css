@@ -9,35 +9,34 @@
     overflow: hidden;
     display: flex;
     position: relative; /* Добавьте относительное позиционирование */
-    width: 385px; /* Подберите подходящую ширину для фона */
-    height: 800px;
+    width: 430px; /* Подберите подходящую ширину для фона */
+    height: 640px;
     margin-bottom: 20px;
-    background-image: url('/public/imgs/tt.png'); /* Замените путь на ваш */
-    background-size: cover; /* чтобы фон полностью покрывал контейнер */
-    background-position: center; /* центрирует фон в контейнере */
+    background-image: url('/src/assets/jk.png');
+    background-position: center;
 }
 
 .slot {
     width: 100px;
-    height: 100px;
+    height: 97px;
     overflow: hidden;
-    border: 2px solid #000;
-    position: absolute; /* Добавьте абсолютное позиционирование */
+    /*border: 2px solid #000;*/
+    position: absolute;
 }
 
 .slot:nth-child(1) {
-    left: 20px; /* Положение по горизонтали */
-    top: 15px;  /* Положение по вертикали */
+    left: 30px;
+    top: 341px;
 }
 
 .slot:nth-child(2) {
-    left: 140px;
-    top: 15px;
+    left: 170px;
+    top: 341px;
 }
 
 .slot:nth-child(3) {
-    left: 260px;
-    top: 15px;
+    left: 300px;
+    top: 341px;
 }
 
 .slot-item {
@@ -70,3 +69,79 @@ button {
     100% { transform: translate(0, 0); }
 }
 
+.bg-div{
+    background-color: #8e44ad;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.spin-div{
+    top: -180px;
+    left: 8px;
+    width: 225px;
+    height: 60px;
+}
+
+.spin-button {
+    background-color: #732d91;
+    color: white;
+    border: yellow;
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+}
+
+.spin-button:hover {
+    background-color: #732d91;
+    transform: scale(1.05);
+}
+
+.spin-button.spinning {
+    animation: spin 1s infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.balance-div{
+    top: -150px;
+    left: -54px;
+    height: 40px;
+    width: 98px;
+    border-radius: 9px;
+}
+
+.balance {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    margin: 0 10px;
+    transition: transform 0.5s, color 0.5s;
+}
+
+.balance.increase {
+    color: #27ae60;
+    transform: scale(1.5);
+}
+
+.balance.decrease {
+    color: #e74c3c;
+    transform: scale(0.6);
+}
+
+.bet-div{
+    height: 40px;
+    width: 98px;
+
+    top: -190px;
+    left: 68px;
+    border-radius: 7px;
+}

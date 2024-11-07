@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import './SlotMachine.css';
 import Slot from './Slot';
 import gif from  '../assets/b.gif';
+import styled, {keyframes} from "styled-components";
 /*import gif0 from '../assets/slots/gifs/0.gif'
 import gif1 from '../assets/slots/gifs/1.gif'
 import gif2 from '../assets/slots/gifs/2.gif'
@@ -13,6 +14,9 @@ const SlotMachine = () => {
     const [spinning, setSpinning] = useState(false);
     const [pressed, setPressed] = useState(false);
     const [isPlaying, setPlaying] = useState(true);
+    const [balance, setBalance] = useState(10000);
+    const [bet, setBet] = useState(10);
+    const [balanceClass, setBalanceClass] = useState('');
 
     const maxTime = 5000;
     const symbols = ["🍒", "🍋", "🍊", "🍉", "⭐️", "💎"];
@@ -58,6 +62,8 @@ const SlotMachine = () => {
         generateItems(setItems2, 50, symbols2[1])
         generateItems(setItems3, 100, symbols2[2])
 
+        setBet(bet => Math.min(bet, balance))
+
     }, []);
 
     const startSpin = () => {
@@ -66,9 +72,35 @@ const SlotMachine = () => {
 
         setTimeout(() => {
             setSpinning(false);
+            setBalanceClass("increase") //increase / decrease
+            setBalance(balance => balance + Number(bet));
+
         }, maxTime);
 
     };
+
+    useEffect(() => {
+        console.log("TTTTTTTTTT")
+        const timer = setTimeout(() => {
+            setBalanceClass('');
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [balance]);
+
+    const handelChangeBet = (e) => {
+        let value = e.target.value;
+        const intV = value.replace(/^0+\d/, '');
+        if (intV >= 0 && intV <= balance){
+            setBet(intV);
+        }
+
+        if (value === ""){
+            setBet(0);
+        }
+    }
+
+
 
     return (
         <div className="slot-machine">
@@ -77,16 +109,37 @@ const SlotMachine = () => {
                 <Slot items={items2} spinning={spinning} timeSpinning={maxTime / 2} isPlaying={isPlaying}/>
                 <Slot items={items3} spinning={spinning} timeSpinning={maxTime / 1} isPlaying={isPlaying}/>
             </div>
-            <button onClick={startSpin} disabled={spinning}>
-                {spinning ? "Spinning..." : "Spin"}
-            </button>
+
+            <div className={`bg-div balance-div`}>
+                <div className={`balance ${balanceClass}`}>
+                    {balance}🍬
+                </div>
+            </div>
+            <div className={`bg-div bet-div`}>
+                <input
+                    type="number"
+                    value={bet}
+                    onChange={handelChangeBet}
+                    style={{width: "80px"}}
+                />
+            </div>
+
+            <div className={`bg-div spin-div`}>
+                <button className={`spin-button ${spinning ? 'spinning' : ''}`} onClick={startSpin} disabled={spinning}>
+                    {spinning ? "Spinning..." : "Spin"}
+                </button>
+            </div>
+            {/*<div style={styles.container}>
+
+            </div>*/}
             <img src={gif} alt="sd" style={{
                 display: `${!spinning && pressed ? 'flex' : 'none'}`,
                 flexDirection: "column",
                 alignItems: "center",
                 width: "400px",
                 height: "400px",
-
+                position: "relative",
+                top: "-700px"
             }}/>
         </div>
 
