@@ -8,13 +8,13 @@ export const enum Bet {
     ZERO
 }
 
-const url = "http://176.117.196.29:8080"
+const url = "https://176.117.196.29"
 const apiUrl = "/api/v1/game"
 
 const fullUrl = url + apiUrl
 
 export const sendBandit = async (tgId, bet) => {
-    return await axios.post(fullUrl + "/bandit", {tgUserId: tgId, bet: bet})
+    return await axios.post(fullUrl + "/bandit/", {tgUserId: tgId, bet: bet})
 }
 
 export const sendRouletteString = (tgId, bet) => {
