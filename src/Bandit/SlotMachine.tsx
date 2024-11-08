@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from 'react';
 import './SlotMachine.css';
 import Slot from './Slot';
-import gif from '../../assets/b.gif';
+import gif from '../assets/b.gif';
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
 import {useParams} from "react-router-dom";
-import {sendBandit} from "../../api/Api";
+import {sendBandit} from "../api/Api";
 
 const SlotMachine = () => {
     const [spinning, setSpinning] = useState(false);

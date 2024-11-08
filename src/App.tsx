@@ -1,4 +1,4 @@
-import SlotMachine from './components/bandit/SlotMachine';
+import SlotMachine from './Bandit/SlotMachine';
 import SpinMachine from "./components/roulette/SpinMachine";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import ManySlotsMachine from "./components/slots/ManySlotsMachine";
