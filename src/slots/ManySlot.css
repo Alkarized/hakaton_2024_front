@@ -9,7 +9,7 @@
     display: flex;
     height: 640px;
     position: relative;
-    background-image: url('../../assets/23.png');
+    background-image: url('../assets/23.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

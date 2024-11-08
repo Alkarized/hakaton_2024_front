@@ -1,5 +1,4 @@
-import {useState} from 'react';
-import './BetBoard.css'; // Импорт стилей
+import './BetBoard.css';
 
 const BetBoard = ({ data, selectedBet, setSelectedBet}) => {
 

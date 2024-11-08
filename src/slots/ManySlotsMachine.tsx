@@ -6,7 +6,6 @@ const ManySlotsMachine = () => {
     const [spinning, setSpinning] = useState(false);
     const maxTime = 5000;
     const symbols = [0, 1, 2, 3, 4]
-    const symbols2 = ["🍒", "🍋", "🍊", "🍉", "⭐️", "💎"];
     const [winMatrix, setWinMatrix] = useState(  [[0, 1, 2, 3, 4], [1, 2, 3, 4, 0], [2, 3, 4, 1, 0]]);
     const [winCombo, setWinCombo] = useState([[0, 1, 1, 0, 0], [1, 1, 1, 1, 1], [0, 1, 1, 0, 0]]);
     const [pressed, setPressed] = useState(false)
@@ -114,15 +113,6 @@ const ManySlotsMachine = () => {
                 {spinning ? "Spinning..." : "Spin"}
             </button>
         </div>
-        {/*<img src="/src/assets/money.gif" style={{
-            display: `${!spinning && pressed ? 'flex' : 'none'}`,
-            flexDirection: "column",
-            alignItems: "center",
-            width: "300px",
-            height: "400px",
-            position: "absolute",
-            top: "40px"
-        }}/>*/}
         <div className={`many-balance ${balanceClass}`}>
             Balance: {balance}$
         </div>
