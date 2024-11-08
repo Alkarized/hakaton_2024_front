@@ -117,7 +117,7 @@ const ManySlotsMachine = () => {
             Balance: {balance}$
         </div>
 
-        <img src="/src/assets/fruit.png" className="fruit-name"/>
+        <img src="/imgs/fruit.png" className="fruit-name"/>
 
         <div className={`many-bet`}>
             <input
@@ -129,7 +129,7 @@ const ManySlotsMachine = () => {
         </div>
 
         <audio ref={audioRef} loop>
-            <source src="/src/assets/fruit.mp3" type="audio/mpeg"/>
+            <source src="/sounds/fruit.mp3" type="audio/mpeg"/>
             Ваш браузер не поддерживает аудио.
         </audio>
     </div>);

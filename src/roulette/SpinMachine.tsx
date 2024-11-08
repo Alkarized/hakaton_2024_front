@@ -28,9 +28,9 @@ const data3 = sortData(data2)
 
 
 const SpinMachine = () => {
-    const audioRef = useRef(new Audio('/src/assets/wheel.mp3'));
-    const winRef = useRef(new Audio('/src/assets/winWheel.mp3'));
-    const loseRef = useRef(new Audio('/src/assets/loseWheel.mp3'));
+    const audioRef = useRef(new Audio('/sounds/wheel.mp3'));
+    const winRef = useRef(new Audio('/sounds/winWheel.mp3'));
+    const loseRef = useRef(new Audio('/sounds/loseWheel.mp3'));
     const [selectedBet, setSelectedBet] = useState(0)
     const isWin = useRef(false);
 
