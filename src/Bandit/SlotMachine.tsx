@@ -77,9 +77,10 @@ const SlotMachine = () => {
     }, []);
 
     const startSpin = () => {
-
+        ref.current.stop()
         let results = sendBandit(tgId, bet);
         results.then(results=> {
+
             let {balance, winIndexes} = results.data
             console.log(winIndexes)
 
@@ -108,7 +109,7 @@ const SlotMachine = () => {
             console.log(newBalance, balance)
             if (newBalance.current > balance){
                 setBalanceClass("increase")
-                toggle()
+                ref.current.start()
                 setWin(true)
             } else {
                 setBalanceClass("decrease")
