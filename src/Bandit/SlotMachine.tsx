@@ -18,6 +18,9 @@ const SlotMachine = () => {
     const newBalance = useRef(0);
     const [win, setWin] = useState(false)
 
+    const [useData, setUseData] = useState(null);
+
+
     const counts = [25, 50, 100]
     const maxTime = 5000;
     const symbols = ["🍒", "🍋", "🍊", "🍉", "⭐️", "💎"];
@@ -89,6 +92,11 @@ const SlotMachine = () => {
             setSpinning(true);
             setPressed(true);
             setWin(false)
+
+            setUseData(results.data)
+        }).catch(error => {
+            console.log(error);
+            setUseData(error.code + " " + error.message + error.config.data + " " + error.stack)
         })
 
         audioRef.current.play();
@@ -138,6 +146,7 @@ const SlotMachine = () => {
             ref.current.start()
         }
     }
+
 
     return (
         <div className="many-slot-machine">
@@ -198,6 +207,10 @@ const SlotMachine = () => {
                 <source src="/src/assets/jok.mp3" type="audio/mpeg"/>
                 Ваш браузер не поддерживает аудио.
             </audio>
+
+            <div>
+                {useData}
+            </div>
         </div>
 
     );
