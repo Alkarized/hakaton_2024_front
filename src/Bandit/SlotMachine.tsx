@@ -18,7 +18,7 @@ const SlotMachine = () => {
     const newBalance = useRef(0);
     const [win, setWin] = useState(false)
 
-    const [useData, setUseData] = useState(null);
+    const [useData, setUseData] = useState("null");
 
 
     const counts = [25, 50, 100]
@@ -93,7 +93,7 @@ const SlotMachine = () => {
             setPressed(true);
             setWin(false)
 
-            setUseData(results.data)
+            //setUseData(results.data)
         }).catch(error => {
             console.log(error);
             if (error){
@@ -210,9 +210,9 @@ const SlotMachine = () => {
                 Ваш браузер не поддерживает аудио.
             </audio>
 
-            <div>
+            <p>
                 {useData}
-            </div>
+            </p>
         </div>
 
     );
