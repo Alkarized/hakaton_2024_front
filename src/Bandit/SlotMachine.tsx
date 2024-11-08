@@ -96,7 +96,9 @@ const SlotMachine = () => {
             setUseData(results.data)
         }).catch(error => {
             console.log(error);
-            setUseData(error.code + " " + error.message + error.config.data + " " + error.stack)
+            if (error){
+                setUseData(error.code + " " + error.message + error.config.data + " " + error.stack + " " + error.response)
+            }
         })
 
         audioRef.current.play();
