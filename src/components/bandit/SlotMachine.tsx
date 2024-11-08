@@ -1,16 +1,11 @@
 import {useEffect, useRef, useState} from 'react';
 import './SlotMachine.css';
 import Slot from './Slot';
-import gif from  '../assets/b.gif';
-import styled, {keyframes} from "styled-components";
-/*import gif0 from '../assets/slots/gifs/0.gif'
-import gif1 from '../assets/slots/gifs/1.gif'
-import gif2 from '../assets/slots/gifs/2.gif'
-import gif3 from '../assets/slots/gifs/3.gif'
-import gif4 from '../assets/slots/gifs/4.gif'
-import gif5 from '../assets/slots/gifs/5.gif'*/
+import gif from '../../assets/b.gif';
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
+import {useParams} from "react-router-dom";
+import {sendBandit} from "../../api/Api";
 
 const SlotMachine = () => {
     const [spinning, setSpinning] = useState(false);
@@ -19,10 +14,16 @@ const SlotMachine = () => {
     const [balance, setBalance] = useState(100);
     const [bet, setBet] = useState(10);
     const [balanceClass, setBalanceClass] = useState('');
+    const audioRef = useRef(null);
+    const newBalance = useRef(0);
+    const [win, setWin] = useState(false)
 
+    const counts = [25, 50, 100]
     const maxTime = 5000;
     const symbols = ["🍒", "🍋", "🍊", "🍉", "⭐️", "💎"];
     const symbols2 = [0, 1, 2, 3, 4, 5];
+
+    const {tgId, startBalance} = useParams();
 
     const [items1, setItems1] = useState({
         items: [],
@@ -55,33 +56,54 @@ const SlotMachine = () => {
             count: count,
         })
 
-        console.log(tmpItems)
+        return tmpItems
     }
 
     useEffect(() => {
+        generateItems(setItems1, 1, symbols2[Math.floor(Math.random() * symbols2.length)]);
+        generateItems(setItems2, 1, symbols2[Math.floor(Math.random() * symbols2.length)])
+        generateItems(setItems3, 1, symbols2[Math.floor(Math.random() * symbols2.length)])
 
-        generateItems(setItems1, 25, symbols2[0])
-        generateItems(setItems2, 50, symbols2[1])
-        generateItems(setItems3, 100, symbols2[2])
+        let newBalance = Number(startBalance)
 
-        setBet(bet => Math.min(bet, balance))
+        setBalance(newBalance);
+
+        setBet(bet => Math.min(bet, newBalance))
         toggle()
 
     }, []);
 
     const startSpin = () => {
-        setSpinning(true);
-        setPressed(true);
 
-        if (ref.current.isRunning) {
-            ref.current.stop()
-        }
+        let results = sendBandit(tgId, bet);
+        results.then(results=> {
+            let {balance, winIndexes} = results.data
+            console.log(winIndexes)
+
+            newBalance.current = balance;
+
+            generateItems(setItems1, counts[0], winIndexes[0])
+            generateItems(setItems2, counts[1], winIndexes[1])
+            generateItems(setItems3, counts[2], winIndexes[2])
+
+            setSpinning(true);
+            setPressed(true);
+            setWin(false)
+        })
+
+        audioRef.current.play();
 
         setTimeout(() => {
             setSpinning(false);
-            setBalanceClass("increase") //increase / decrease
-            setBalance(balance => balance + Number(bet));
-            toggle()
+            console.log(newBalance, balance)
+            if (newBalance.current > balance){
+                setBalanceClass("increase")
+                toggle()
+                setWin(true)
+            } else {
+                setBalanceClass("decrease")
+            }
+            setBalance(newBalance.current);
         }, maxTime);
 
     };
@@ -147,7 +169,7 @@ const SlotMachine = () => {
 
             <Fireworks
                 ref={ref}
-                options={{ opacity: 0.5 }}
+                options={{opacity: 0.5}}
                 style={{
                     position: "absolute",
                     top: "20px",
@@ -156,13 +178,13 @@ const SlotMachine = () => {
                 }}
             />
 
-            <img src={gif} alt="sd" onClick={() => {
+            <img src={gif} onClick={() => {
                 setPressed(false)
                 if (ref.current.isRunning) {
                     ref.current.stop()
                 }
             }} style={{
-                display: `${!spinning && pressed ? 'flex' : 'none'}`,
+                display: `${!spinning && pressed && win ? 'flex' : 'none'}`,
                 flexDirection: "column",
                 alignItems: "center",
                 width: "400px",
@@ -171,6 +193,11 @@ const SlotMachine = () => {
                 top: "40px"
             }}/>
 
+
+            <audio ref={audioRef} loop preload="auto">
+                <source src="/src/assets/jok.mp3" type="audio/mpeg"/>
+                Ваш браузер не поддерживает аудио.
+            </audio>
         </div>
 
     );

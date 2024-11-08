@@ -1,25 +1,24 @@
 import {useEffect, useState} from 'react';
 import styled, {keyframes} from 'styled-components';
 
-const imgPath = "/imgs/";
-const gifPath = "/gifs/";
+const imgPath = "/fruits/";
 
-const ManySlot = ({items, spinning, timeSpinning}) => {
+const ManySlot = ({items, spinning, timeSpinning, winCombo, pressed}) => {
     const spinAnimation = () => keyframes`
         0% {
             transform: translateY(0);
         }
         50% {
-            transform: translateY(-${70 * (items.count-2)}px);
+            transform: translateY(-${20 * (items.count)}px);
         }
         75% {
-            transform: translateY(-${90 * (items.count-2)}px);
+            transform: translateY(-${35 * (items.count)}px);
         }
         90% {
-            transform: translateY(-${99 * (items.count-2)}px);
+            transform: translateY(-${42 * (items.count)}px);
         }
         100% {
-            transform: translateY(-${100 * (items.count-2)}px);
+            transform: translateY(-${43 * (items.count)}px);
         }
     `;
 
@@ -34,7 +33,7 @@ const ManySlot = ({items, spinning, timeSpinning}) => {
     const ManySlotItem = styled.div`
         &.shaking {
             animation: tilt-n-move-shaking 0.5s ease infinite;
-            transform: translateY(-${(items.count-2) * 100}px)
+            transform: translateY(-${(items.count) * 43}px)
         }
     `
 
@@ -49,11 +48,15 @@ const ManySlot = ({items, spinning, timeSpinning}) => {
 
             setTimeout(() => {
                 setAnimationClass('');
-                setPosition(items.count-2);
+                setPosition(items.count);
                 setShaking('shaking')
             }, timeSpinning);
         }
     }, [spinning]);
+
+    useEffect(() => {
+        console.log(" asd as: " + winCombo)
+    }, []);
 
     return (
         <div className="many-slot">
@@ -61,12 +64,15 @@ const ManySlot = ({items, spinning, timeSpinning}) => {
                 className={animationClass}
                 itemsCount={items.items.length}
                 style={{
-                    transform: `translateY(-${position * 100}px)`,
+                    transform: `translateY(-${position * 43}px)`,
                 }}
             >
                 {items.items.map((item, index) => (
-                    <ManySlotItem key={index} className={`many-slot-item`}>
-                        {item}
+                    <ManySlotItem key={index} className={`many-slot-item ${!pressed || spinning ? '' : index >= items.count && winCombo[index - items.count] == 1 ? 'many-shaking' : 'many-lose'} `}>
+                        <img src={`${imgPath}${item}.png`} style={{
+                            width: "43px",
+                            height: "43px",
+                        }}/>
                     </ManySlotItem>
                 ))}
             </ManySlotItems>

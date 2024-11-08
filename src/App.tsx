@@ -1,17 +1,16 @@
-import SlotMachine from './Slots/SlotMachine';
-import SpinMachine from "./Spins/SpinMachine";
+import SlotMachine from './components/bandit/SlotMachine';
+import SpinMachine from "./components/roulette/SpinMachine";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import ManySlotsMachine from "./ManySlots/ManySlotsMachine";
+import ManySlotsMachine from "./components/slots/ManySlotsMachine";
 
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="*" Component={SlotMachine}/>
-                <Route path="/spin" Component={SpinMachine}/>
-                <Route path="/slot" Component={SlotMachine} />
-                <Route path="/slot2" Component={ManySlotsMachine} />
+                <Route path="/roulette/:tgId/:startBalance" Component={SpinMachine}/>
+                <Route path="/bandit/:tgId/:startBalance" Component={SlotMachine} />
+                <Route path="/slots/:tgId/:startBalance" Component={ManySlotsMachine} />
             </Routes>
         </Router>
     );

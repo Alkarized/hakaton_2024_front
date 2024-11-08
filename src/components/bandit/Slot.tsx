@@ -4,39 +4,40 @@ import styled, {keyframes} from 'styled-components';
 const imgPath = "/imgs/";
 const gifPath = "/gifs/";
 
-const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
-    const spinAnimation = () => keyframes`
+const spinAnimation = (count) => keyframes`
         0% {
             transform: translateY(0);
         }
         50% {
-            transform: translateY(-${70 * items.count}px);
+            transform: translateY(-${70 * count}px);
         }
         75% {
-            transform: translateY(-${90 * items.count}px);
+            transform: translateY(-${90 * count}px);
         }
         90% {
-            transform: translateY(-${99 * items.count}px);
+            transform: translateY(-${99 * count}px);
         }
         100% {
-            transform: translateY(-${100 * items.count}px);
+            transform: translateY(-${100 * count}px);
         }
     `;
 
-    const SlotItems = styled.div`
-        transition: transform ${timeSpinning / 1000}s ease-out;
+const SlotItems = styled.div`
+        transition: transform ${props => props.timespinning / 1000}s ease-out;
 
         &.spinning {
-            animation: ${() => spinAnimation()} ${timeSpinning / 1000}s linear;
+            animation: ${props => spinAnimation(props.itemscount)} ${props => props.timespinning / 1000}s linear;
         }
     `;
 
-    const SlotItem = styled.div`
+const SlotItem = styled.div`
         &.shaking {
             animation: tilt-n-move-shaking 0.5s ease infinite;
-            transform: translateY(-${items.count * 100}px)
+            transform: translateY(-${props => props.itemscount * 100}px)
         }
     `
+
+const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
 
     const [position, setPosition] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
@@ -59,13 +60,14 @@ const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
         <div className="slot">
             <SlotItems
                 className={animationClass}
-                itemsCount={items.items.length}
+                itemscount={items.count}
+                timespinning={timeSpinning}
                 style={{
                     transform: `translateY(-${position * 100}px)`,
                 }}
             >
                 {items.items.map((item, index) => (
-                    <SlotItem key={index} className={`slot-item`}>
+                    <SlotItem key={index} className={`slot-item`} itemscount={items.count}>
                         {isPlaying && shaking && !spinning ? (
                             <img src={`${gifPath}${item}.gif`} width="100px" height="100px"/> //todo import to load it faster!
                         ) : (
