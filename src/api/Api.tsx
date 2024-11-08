@@ -8,7 +8,7 @@ export const enum Bet {
     ZERO
 }
 
-const url = "http://localhost:8080"
+const url = "http://176.117.196.29:8080"
 const apiUrl = "/api/v1/game"
 
 const fullUrl = url + apiUrl
