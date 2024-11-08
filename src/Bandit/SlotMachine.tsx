@@ -223,7 +223,7 @@ const SlotMachine = () => {
 
 
             <audio ref={audioRef} loop preload="auto">
-                <source src="/src/assets/jok.mp3" type="audio/mpeg"/>
+                <source src="/sounds/jok.mp3" type="audio/mpeg"/>
                 Ваш браузер не поддерживает аудио.
             </audio>
 
