@@ -47,29 +47,65 @@ function generateList(max: number) {
 
 }
 
-const data2 = generateList(37);
 
 const sortData = (tmpData) => {
-   return [...tmpData].sort((a, b) => a.option - b.option);
+    return [...tmpData].sort((a, b) => a.option - b.option);
 }
 
+const data2 = generateList(37);
+const data3 = sortData(data2)
+
+
 const SpinMachine = () => {
-    const {user_id} = useParams();
-    const audioRef = useRef(null);
-    const winRef = useRef(null);
-    const loseRef = useRef(null);
+    const audioRef = useRef(new Audio('/src/assets/wheel.mp3'));
+    const winRef = useRef(new Audio('/src/assets/winWheel.mp3'));
+    const loseRef = useRef(new Audio('/src/assets/loseWheel.mp3'));
+    const [selectedBet, setSelectedBet] = useState(0)
+    const isWin = useRef(false);
 
     const [mustSpin, setMustSpin] = useState(false);
-    const [prizeNumber, setPrizeNumber] = useState(0);
+    const [prizeNumber, setPrizeNumber] = useState(Math.floor(Math.random() * data2.length));
 
     const handleSpinClick = () => {
+        console.log(selectedBet)
         if (!mustSpin) {
             audioRef.current.play();
-            const newPrizeNumber = Math.floor(Math.random() * data2.length);
-            setPrizeNumber(newPrizeNumber);
+            isWin.current = checkPrizeWin(prizeNumber, selectedBet)
+
             setMustSpin(true);
+            setPrizeNumber(Math.floor(Math.random() * data2.length))
+
         }
 
+    }
+
+    const checkPrizeWin = (prizeRes, set) => {
+        console.log(prizeRes + " " + set + " " + data2[prizeRes].option )
+        if (set === "red" && data2[prizeRes].style.backgroundColor === "red") {
+            return true
+        } else if (set === "black" && data2[prizeRes].style.backgroundColor === "black") {
+            return true
+        } else if (set === "odd" && Number(data2[prizeRes].option) % 2 !== 0) {
+            return true;
+        } else if (set === "even" && Number(data2[prizeRes].option) % 2 === 0) {
+            return true;
+        } else if (String(data2[prizeRes].option) === String(set)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    const handleStop = () => {
+        setMustSpin(false)
+        audioRef.current.pause()
+        if (isWin.current){
+            winRef.current.play()
+        } else {
+            loseRef.current.play()
+        }
+        isWin.current = false;
     }
 
     return (
@@ -86,24 +122,16 @@ const SpinMachine = () => {
                 innerBorderColor="black"
                 radiusLineColor="white"
                 innerBorderWidth={6}
-                spinDuration={2}
+                spinDuration={0.1}
                 perpendicularText={true}
-                onStopSpinning={() => {
-                    setMustSpin(false);
-                    audioRef.current.pause();
-                    if (Math.random() > 0.5) {
-                        loseRef.current.play()
-                    } else {
-                        winRef.current.play();
-                    }
-                }}
+                onStopSpinning={handleStop}
                 textDistance={80}
                 backgroundColors={bgColor}
                 textColors={["white"]}
                 fontSize={15}
                 pointerProps={pointer}
             />
-            <BetSelector data={sortData(data2)}/>
+            <BetSelector data={data3} selectedBet={selectedBet} setSelectedBet={setSelectedBet}/>
             <div
                 style={{
                     display: "flex",
@@ -116,18 +144,6 @@ const SpinMachine = () => {
                 </button>
             </div>
 
-            <audio ref={audioRef}>
-                <source src="/src/assets/wheel.mp3" type="audio/mpeg"/>
-                Ваш браузер не поддерживает аудио.
-            </audio>
-            <audio ref={loseRef}>
-                <source src="/src/assets/loseWheel.mp3" type="audio/mpeg"/>
-                Ваш браузер не поддерживает аудио.
-            </audio>
-            <audio ref={winRef}>
-                <source src="/src/assets/winWheel.mp3" type="audio/mpeg"/>
-                Ваш браузер не поддерживает аудио.
-            </audio>
         </>
     )
 }

@@ -62,6 +62,15 @@ const SlotMachine = () => {
         return tmpItems
     }
 
+    const generateRandomSym = () => {
+        return [
+            Math.floor(Math.random() * symbols2.length),
+            Math.floor(Math.random() * symbols2.length),
+            Math.floor(Math.random() * symbols2.length)
+            //0, 0, 0
+        ]
+    }
+
     useEffect(() => {
         generateItems(setItems1, 1, symbols2[Math.floor(Math.random() * symbols2.length)]);
         generateItems(setItems2, 1, symbols2[Math.floor(Math.random() * symbols2.length)])
@@ -78,35 +87,42 @@ const SlotMachine = () => {
 
     const startSpin = () => {
         ref.current.stop()
-        let results = sendBandit(tgId, bet);
-        results.then(results=> {
+        //let results = sendBandit(tgId, bet);
 
-            let {balance, winIndexes} = results.data
-            console.log(winIndexes)
+        let results = generateRandomSym();
 
-            newBalance.current = balance;
+        //let {balance, winIndexes} = results.data
+        //console.log(winIndexes)
 
-            generateItems(setItems1, counts[0], winIndexes[0])
-            generateItems(setItems2, counts[1], winIndexes[1])
-            generateItems(setItems3, counts[2], winIndexes[2])
+        if (results[0] === results[1] && results[1] === results[2]){
+            newBalance.current = balance + 10 * bet;
+        } else {
+            newBalance.current = balance - bet;
+        }
 
-            setSpinning(true);
-            setPressed(true);
-            setWin(false)
+        generateItems(setItems1, counts[0], results[0])
+        generateItems(setItems2, counts[1], results[1])
+        generateItems(setItems3, counts[2], results[2])
 
-            //setUseData(results.data)
-        }).catch(error => {
-            console.log(error);
-            if (error){
-                setUseData(error.code + " " + error.message + error.config.data + " " + error.stack + " " + error.response)
-            }
-        })
+        setSpinning(true);
+        setPressed(true);
+
+        // results.then(results=> {
+        //
+        //
+        //     //setUseData(results.data)
+        // })/*.catch(error => {
+        //     console.log(error);
+        //     if (error){
+        //         setUseData(error.code + " " + error.message + error.config.data + " " + error.stack + " " + error.response)
+        //     }
+        // })*/
 
         audioRef.current.play();
 
         setTimeout(() => {
             setSpinning(false);
-            console.log(newBalance, balance)
+            // console.log(newBalance, balance)
             if (newBalance.current > balance){
                 setBalanceClass("increase")
                 ref.current.start()
@@ -154,9 +170,9 @@ const SlotMachine = () => {
     return (
         <div className="many-slot-machine">
             <div className="slots">
-                <Slot items={items1} spinning={spinning} timeSpinning={maxTime / 3} isPlaying={isPlaying}/>
-                <Slot items={items2} spinning={spinning} timeSpinning={maxTime / 2} isPlaying={isPlaying}/>
-                <Slot items={items3} spinning={spinning} timeSpinning={maxTime / 1} isPlaying={isPlaying}/>
+                <Slot items={items1} spinning={spinning} timeSpinning={maxTime / 3} isPlaying={isPlaying} isWin = {win}/>
+                <Slot items={items2} spinning={spinning} timeSpinning={maxTime / 2} isPlaying={isPlaying} isWin = {win}/>
+                <Slot items={items3} spinning={spinning} timeSpinning={maxTime / 1} isPlaying={isPlaying} isWin = {win}/>
             </div>
 
             <div className={`bg-div balance-div`}>
@@ -211,9 +227,6 @@ const SlotMachine = () => {
                 Ваш браузер не поддерживает аудио.
             </audio>
 
-            <p>
-                {useData}
-            </p>
         </div>
 
     );

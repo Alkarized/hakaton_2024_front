@@ -37,7 +37,7 @@ const SlotItem = styled.div`
         }
     `
 
-const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
+const SlotMachine = ({items, spinning, timeSpinning, isPlaying, isWin}) => {
 
     const [position, setPosition] = useState(0);
     const [animationClass, setAnimationClass] = useState('');
@@ -68,7 +68,7 @@ const SlotMachine = ({items, spinning, timeSpinning, isPlaying}) => {
             >
                 {items.items.map((item, index) => (
                     <SlotItem key={index} className={`slot-item`} itemscount={items.count}>
-                        {isPlaying && shaking && !spinning ? (
+                        {isPlaying && shaking && !spinning && isWin? (
                             <img src={`${gifPath}${item}.gif`} width="100px" height="100px"/> //todo import to load it faster!
                         ) : (
                             <img src={`${imgPath}${item}.png`} width="100px" height="100px"/>

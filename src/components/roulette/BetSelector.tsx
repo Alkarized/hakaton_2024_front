@@ -1,8 +1,7 @@
 import {useState} from 'react';
 import './BetBoard.css'; // Импорт стилей
 
-const BetBoard = ({ data }) => {
-    const [selectedBet, setSelectedBet] = useState('');
+const BetBoard = ({ data, selectedBet, setSelectedBet}) => {
 
     const handleNumberClick = (number) => {
         setSelectedBet(number);

@@ -265,42 +265,42 @@ export const wheelData: WheelData [] = [
 ]
 
 export const wheelSeqData : WheelData[] = [
-    wheelData[0],
-    wheelData[32],
-    wheelData[15],
-    wheelData[19],
-    wheelData[4],
-    wheelData[21],
-    wheelData[2],
-    wheelData[25],
-    wheelData[17],
-    wheelData[34],
-    wheelData[6],
-    wheelData[27],
-    wheelData[13],
-    wheelData[36],
-    wheelData[11],
-    wheelData[30],
-    wheelData[8],
-    wheelData[23],
-    wheelData[10],
-    wheelData[5],
-    wheelData[24],
-    wheelData[16],
-    wheelData[33],
-    wheelData[1],
-    wheelData[20],
-    wheelData[14],
-    wheelData[31],
-    wheelData[9],
-    wheelData[22],
-    wheelData[18],
-    wheelData[29],
-    wheelData[7],
-    wheelData[28],
-    wheelData[12],
-    wheelData[35],
-    wheelData[3],
-    wheelData[26],
+    wheelData[0], // 0
+    wheelData[32], // 1
+    wheelData[15], // 2
+    wheelData[19], // 3
+    wheelData[4], // 4
+    wheelData[21], // 5
+    wheelData[2], // 6
+    wheelData[25], // 7
+    wheelData[17], // 8
+    wheelData[34], // 9
+    wheelData[6], // 10
+    wheelData[27], // 11
+    wheelData[13], // 12
+    wheelData[36], // 13
+    wheelData[11], // 14
+    wheelData[30], // 15
+    wheelData[8], // 16
+    wheelData[23], // 17
+    wheelData[10], // 18
+    wheelData[5], // 19
+    wheelData[24], // 20
+    wheelData[16], // 21
+    wheelData[33], // 22
+    wheelData[1], // 23
+    wheelData[20], // 24
+    wheelData[14], // 25
+    wheelData[31], // 26
+    wheelData[9], // 27
+    wheelData[22], // 28
+    wheelData[18], // 29
+    wheelData[29], // 30
+    wheelData[7], // 31
+    wheelData[28], // 32
+    wheelData[12], // 33
+    wheelData[35], // 34
+    wheelData[3], // 35
+    wheelData[26], // 36
 
 ]
