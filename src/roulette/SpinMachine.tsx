@@ -11,7 +11,7 @@ const bgColor = [
 ]
 
 const pointer: PointerProps = {
-    src: "/public/imgs/pointer.png",
+    src: "/imgs/pointer.png",
 }
 
 function generateList() {
